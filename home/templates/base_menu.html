@@ -10,24 +10,24 @@
     <ul class="nav navbar-nav">
       {% url 'ads' as ads %}
       <li {% if request.get_full_path == ads %}class="active"{% endif %}>
-          <a href="{% url 'ads:all' %}">Ads</a></li>
+          <a href="{% url 'projects:all' %}">View Projects</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
         <li>
-        <a href="{% url 'ads:ad_create' %}">Create Ad</a>
+        <a href="{% url 'projects:create' %}">Create Project</a>
         </li>
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
                 <img style="width: 25px;" src="{{ user|gravatar:60 }}"/><b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="{% url 'logout' %}?next={% url 'ads:all' %}">Logout</a></li>
+                <li><a href="{% url 'logout' %}?next={% url 'projects:all' %}">Logout</a></li>
             </ul>
         </li>
         {% else %}
         <li>
-        <a href="{% url 'login' %}?next={% url 'ads:all' %}">Login</a>
+        <a href="{% url 'login' %}?next={% url 'projects:all' %}">Login</a>
         </li>
         {% endif %}
     </ul>

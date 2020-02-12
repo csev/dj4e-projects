@@ -1,14 +1,7 @@
-<html>
-<head>
-    <title>{{ settings.APP_NAME }}</title>
-    <!-- edit samples/settings.py and add APP_NAME='DJ4E Samples' or similar
-        Also make sure that home/context_processors.py exists and is included
-        settings.py context processors as 'home.context_processors.settings' -->
-</head>
-<body>
+{% extends "base_menu.html" %}
+{% block content %}
     <h1>Welcome to {{ settings.APP_NAME }}</h1>
     <p>
     Hello world.
     </p>
-</body>
-</html>
+{% endblock %}

@@ -22,8 +22,8 @@ from django.contrib.auth import views as auth_views
 from django.views.static import serve
 
 urlpatterns = [
-    path('', include('home.urls')),  # Change to ads.urls
-    path('projects', include('projects.urls')),
+    path('', include('home.urls')),
+    path('projects/', include('projects.urls')),
     path('admin/', admin.site.urls),  # Keep
     path('accounts/', include('django.contrib.auth.urls')),  # Keep
     url(r'^oauth/', include('social_django.urls', namespace='social')),  # Keep
