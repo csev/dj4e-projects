@@ -1,0 +1,30 @@
+{% extends "base_bootstrap.html" %}
+{% block content %}
+<h1>Projects</h1>
+<p>
+{% if project_list %}
+<ul>
+  {% for project in project_list %}
+    <li>
+        <a href="{% url 'projects:detail'  project.id %}">{{ project.title }}</a>
+        {% if project.owner == user %}
+        (<a href="{% url 'projects:update' project.id %}">Edit</a> |
+        <a href="{% url 'projects:delete' project.id %}">Delete</a>)
+        </p>
+        {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>There are no projects in the database.</p>
+{% endif %}
+</p>
+<p>
+<a href="{% url 'projects:create' %}">Add an Project</a> |
+{% if user.is_authenticated %}
+<a href="{% url 'logout' %}?next={% url 'projects:all' %}">Logout</a>
+{% else %}
+<a href="{% url 'login' %}?next={% url 'projects:all' %}">Login</a>
+{% endif %}
+</p>
+{% endblock %}

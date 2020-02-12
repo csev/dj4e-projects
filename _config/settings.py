@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework', 
     'social_django',  
     'home.apps.HomeConfig',  
+    'projects.apps.ProjectsConfig',  
 ]
 
 # When we get to crispy forms :)
