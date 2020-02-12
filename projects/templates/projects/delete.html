@@ -1,4 +1,5 @@
 {% extends "base_menu.html" %}
+
 {% block content %}
 <h1>Delete Project</h1>
 
@@ -6,6 +7,8 @@
 
 <form action="" method="POST">
   {% csrf_token %}
-  <input type="submit" value="Yes, delete.">
+  <input type="submit" class="btn btn-primary" value="Yes, delete.">
+  <a href="{% url 'proects:all' %}" class="btn btn-secondary">Cancel</a>
+
 </form>
 {% endblock %}

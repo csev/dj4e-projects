@@ -1,6 +1,17 @@
 {% extends "base_menu.html" %}
+
 {% block content %}
-<h1>Projects</h1>
+<h1>Project List</h1>
+<div style="float:right">
+<!-- https://www.w3schools.com/howto/howto_css_search_button.asp -->
+<form>
+  <input type="text" placeholder="Search.." name="search"
+  {% if search %} value="{{ search }}" {% endif %}
+  >
+  <button type="submit"><i class="fa fa-search"></i></button>
+<a href="{% url 'projects:all' %}"><i class="fa fa-undo"></i></a>
+</form>
+</div>
 <p>
 {% if project_list %}
 <ul>
@@ -10,8 +21,44 @@
         {% if project.owner == user %}
         (<a href="{% url 'projects:update' project.id %}">Edit</a> |
         <a href="{% url 'projects:delete' project.id %}">Delete</a>)
-        </p>
         {% endif %}
+        {% if user.is_authenticated %}
+        <a href="#" onclick=
+            "favPost('{% url 'projects:unfavorite' project.id %}', {{ project.id }} );return false;"
+            {% if project.id not in favorites %} style="display: none;" {% endif %}
+            id="favorite_star_{{project.id}}">
+        <span class="fa-stack" style="vertical-align: middle;">
+        <i class="fa fa-star fa-stack-1x" style="color: orange;"></i>
+        <i class="fa fa-star-o fa-stack-1x"></i>
+        </span>
+        </a>
+        <!-- Weird - fa-stack changes vertical spacing so to be consistent we use it here -->
+        <a href="#" onclick=
+             "favPost('{% url 'projects:favorite' project.id %}', {{ project.id }} );return false;"
+            {% if project.id in favorites %} style="display: none;" {% endif %}
+            id="unfavorite_star_{{project.id}}">
+        <span class="fa-stack" style="vertical-align: middle;">
+        <i class="fa fa-star fa-stack-1x" style="display: none; color: orange;"></i>
+        <i class="fa fa-star-o fa-stack-1x"></i>
+        </span>
+        </a>
+        {% endif %}
+        <br/>
+        <div style="left:10px">
+            {% if project.text|length < 100 %}
+                {{ project.text }}
+            {% else %}
+                {{ project.text|slice:"0:99" }}
+                <a href="{% url 'projects:detail'  project.id %}">...</a>
+            {% endif %}
+        </div>
+        <small>
+        {% if project.owner.username %}
+            posted by {{ project.owner.username }}
+        {% endif %}
+        {{ project.natural_updated }}
+        </small>
+        </p>
     </li>
   {% endfor %}
 </ul>
@@ -19,12 +66,21 @@
   <p>There are no projects in the database.</p>
 {% endif %}
 </p>
-<p>
-<a href="{% url 'projects:create' %}">Add an Project</a> |
-{% if user.is_authenticated %}
-<a href="{% url 'logout' %}?next={% url 'projects:all' %}">Logout</a>
-{% else %}
-<a href="{% url 'login' %}?next={% url 'projects:all' %}">Login</a>
-{% endif %}
+<p class="small text-muted">
+Note that your application should not be at the '/m4' path and should not
+have a "Versions" drop-down.  That is just how the sample implementation is written
+to support more than one variant of the code at the same time.
 </p>
+<script>
+function favPost(url, thing_id) {
+    console.log('Requesting JSON');
+    $.post(url, {},  function(rowz){
+        console.log(url, 'finished');
+        $("#unfavorite_star_"+thing_id).toggle();
+        $("#favorite_star_"+thing_id).toggle();
+    }).fail(function(xhr) {
+        alert('Url failed with '+xhr.status+' '+url);
+    });
+}
+</script>
 {% endblock %}
