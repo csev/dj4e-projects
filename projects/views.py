@@ -16,12 +16,12 @@ class ProjectDetailView(OwnerDetailView):
 
 class ProjectCreateView(OwnerCreateView):
     model = Project
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'contact']
     template_name = "projects/form.html"
 
 class ProjectUpdateView(OwnerUpdateView):
     model = Project
-    fields = ['title', 'text']
+    fields = ['title', 'text', 'contact']
     template_name = "projects/form.html"
 
 class ProjectDeleteView(OwnerDeleteView):

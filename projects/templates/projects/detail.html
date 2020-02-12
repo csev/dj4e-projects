@@ -12,8 +12,13 @@
 <p>
 {{ project.text }}
 </p>
+{% if user.is_authenticated %}
+{% if project.contact %}
 <p>
+Contact: {{ project.contact }}
 </p>
+{% endif %}
+{% endif %}
 <p>
 <a href="{% url 'projects:all' %}">All projects</a>
 </p>
