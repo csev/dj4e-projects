@@ -28,12 +28,12 @@ onclick="$('#overlay').hide();" >
 {% endif %}
 </span>
 <h1>
+    {{ project.title }}
     {% if project.url %}
-    <a href="{{project.url}}" target="_blank">
-    {{ project.title }}
+    <br/>
+    <a href="{{project.url}}" target="_blank" style="font-size: 0.6em;">
+    {{ project.url }}
     </a>
-    {% else %}
-    {{ project.title }}
     {% endif %}
 </h1>
 {% if project.content_type %}
@@ -43,6 +43,12 @@ onclick="$('#overlay').hide();" >
 <p>
 {{ project.text }}
 </p>
+{% if project.source %}
+<p>
+Project source:
+<a href="{{ project.source }}" target="_blank">{{ project.source }}</a>
+</p>
+{% endif %}
 {% if user.is_authenticated %}
 <br clear="all"/>
 <p>
