@@ -24,7 +24,8 @@ class CreateForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['title', 'contact', 'text', 'picture']  # Picture is manual
+        # Published will be set by administrators
+        fields = ['title', 'contact', 'share_contact', 'text', 'picture']  # Picture is manual
 
     def save(self, commit=True) :
         instance = super(CreateForm, self).save(commit=False)

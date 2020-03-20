@@ -63,7 +63,12 @@
   {% endfor %}
 </ul>
 {% else %}
-  <p>There are no projects in the database.</p>
+  <p>There are no published projects in the database.</p>
+{% endif %}
+{% if unpublished %}
+<p>
+There are {{ unpublished }} project(s) that are under review.
+</p>
 {% endif %}
 </p>
 <script>

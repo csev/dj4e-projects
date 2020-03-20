@@ -28,12 +28,14 @@ class MyListView(OwnerListView):
             # Multi-field search
             query = Q(title__contains=strval)
             query.add(Q(text__contains=strval), Q.OR)
-            project_list = Project.objects.filter(query).select_related().order_by('-updated_at')[:10]
+            project_list = Project.objects.filter(Q(owner=request.user.id) | Q(published=True)).filter(query).select_related().order_by('-updated_at')[:10]
         else :
             # try both versions with > 4 posts and watch the queries that happen
-            project_list = Project.objects.all().order_by('-updated_at')[:10]
+            project_list = Project.objects.filter(Q(owner=request.user.id) | Q(published=True)).order_by('-updated_at')[:10]
             # objects = Project.objects.select_related().all().order_by('-updated_at')[:10]
-        print(project_list)
+
+        unpublished = Project.objects.filter(published=None).count()
+        # print(project_list)
         favorites = list()
         if request.user.is_authenticated:
             # rows = [{'id': 2}]  (A list of rows)
@@ -44,7 +46,7 @@ class MyListView(OwnerListView):
         for project in project_list:
             project.natural_updated = naturaltime(project.updated_at)
 
-        ctx = {'project_list' : project_list, 'favorites': favorites, 'search': strval}
+        ctx = {'project_list' : project_list, 'favorites': favorites, 'search': strval, 'unpublished': unpublished}
         return render(request, self.template_name, ctx)
 
 class MyDetailView(OwnerDetailView):

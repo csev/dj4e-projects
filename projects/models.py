@@ -9,8 +9,14 @@ class Project(models.Model) :
             validators=[MinLengthValidator(2, "Title must be greater than 2 characters")]
     )
     contact = models.CharField(max_length=200, blank=True)
-    text = models.TextField()
+    share_contact = models.BooleanField(
+            verbose_name='Show contact information on the web site',
+            help_text='Please indicate if you want to share contact information with visitors to the site.')
+    text = models.TextField(
+            verbose_name='A brief description of the project')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="owners_project")
+
+    published = models.BooleanField(null=True, blank=True)
 
     comments = models.ManyToManyField(settings.AUTH_USER_MODEL,
         through='Comment', related_name='comments_projects')
@@ -20,8 +26,8 @@ class Project(models.Model) :
         through='Fav', related_name='favorite_projects')
 
     # Picture
-    picture = models.BinaryField(null=True, editable=True)
-    content_type = models.CharField(max_length=256, null=True, help_text='The MIMEType of the file')
+    picture = models.BinaryField(null=True, blank=True, editable=True)
+    content_type = models.CharField(max_length=256, null=True, blank=True, help_text='The MIMEType of the file')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
