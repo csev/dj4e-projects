@@ -19,7 +19,9 @@
     {% endif %}
 </h1>
 {% if project.content_type %}
+<a href="{% url 'projects:picture' project.id %}" target="_blank">
 <img style="float:right; max-width:30%;" src="{% url 'projects:picture' project.id %}">
+</a>
 {% endif %}
 <p>
 {{ project.text }}

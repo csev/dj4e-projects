@@ -4,6 +4,12 @@ from django.contrib import admin
 
 from projects.models import Project, Comment, Fav
 
-admin.site.register(Project)
+# Define the admin class
+class ProjectAdmin(admin.ModelAdmin):
+    exclude = ('picture', 'content_type')
+
+# Register the admin class with the associated model
+admin.site.register(Project, ProjectAdmin)
+
 admin.site.register(Comment)
 admin.site.register(Fav)
