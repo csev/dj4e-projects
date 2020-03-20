@@ -8,12 +8,14 @@ class Project(models.Model) :
             max_length=200,
             validators=[MinLengthValidator(2, "Title must be greater than 2 characters")]
     )
-    contact = models.CharField(max_length=200, blank=True)
-    share_contact = models.BooleanField(
-            verbose_name='Show contact information on the web site',
-            help_text='Please indicate if you want to share contact information with visitors to the site.')
-    text = models.TextField(
-            verbose_name='A brief description of the project')
+    url = models.URLField(max_length=200,
+            help_text='Please provide the url of the working project')
+    source = models.URLField(max_length=200, null=True, blank=True,
+            help_text='Please provide the url to the source of the project (i.e on GitHub)')
+    text = models.TextField(verbose_name='A description of the project')
+    note = models.TextField(null=True, blank=True,
+            verbose_name='A private note to the site administrator (i.e. not the public)')
+
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="owners_project")
 
     published = models.BooleanField(null=True, blank=True)
@@ -26,7 +28,8 @@ class Project(models.Model) :
         through='Fav', related_name='favorite_projects')
 
     # Picture
-    picture = models.BinaryField(null=True, blank=True, editable=True)
+    picture = models.BinaryField(null=True, blank=True, editable=True,
+            verbose_name='Screen shot of the application')
     content_type = models.CharField(max_length=256, null=True, blank=True, help_text='The MIMEType of the file')
 
     created_at = models.DateTimeField(auto_now_add=True)

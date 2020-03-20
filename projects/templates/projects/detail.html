@@ -9,7 +9,15 @@
 <a href="{% url 'projects:delete' project.id %}"><i class="fa fa-trash"></i></a>
 {% endif %}
 </span>
-<h1>{{ project.title }}</h1>
+<h1>
+    {% if project.url %}
+    <a href="{{project.url}}" target="_blank">
+    {{ project.title }}
+    </a>
+    {% else %}
+    {{ project.title }}
+    {% endif %}
+</h1>
 {% if project.content_type %}
 <img style="float:right; max-width:30%;" src="{% url 'projects:picture' project.id %}">
 {% endif %}
@@ -18,11 +26,6 @@
 </p>
 {% if user.is_authenticated %}
 <br clear="all"/>
-{% if project.contact %}
-<p>
-Contact: {{project.contact}}
-</p>
-{% endif %}
 <p>
 <form method="post" action="{% url 'projects:comment_create' project.id %}">
     {% csrf_token %}

@@ -19,13 +19,13 @@ class CreateForm(forms.ModelForm):
     # Call this 'picture' so it gets copied from the form to the in-memory model
     # It will not be the "bytes", it will be the "InMemoryUploadedFile"
     # because we need to pull out things like content_type
-    picture = forms.FileField(required=False, label='File to Upload <= '+max_upload_limit_text)
+    picture = forms.FileField(required=False, label='Screen shot to Upload <= '+max_upload_limit_text)
     upload_field_name = 'picture'
 
     class Meta:
         model = Project
         # Published will be set by administrators
-        fields = ['title', 'contact', 'share_contact', 'text', 'picture']  # Picture is manual
+        fields = ['title', 'url', 'picture', 'text', 'note']  # Picture is manual
 
     def save(self, commit=True) :
         instance = super(CreateForm, self).save(commit=False)
