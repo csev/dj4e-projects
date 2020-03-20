@@ -40,15 +40,15 @@ onclick="$('#overlay').hide();" >
 <img style="float:right; max-width:30%;" src="{% url 'projects:picture' project.id %}"
                                          onclick="$('#overlay').show();">
 {% endif %}
-<p>
-{{ project.text }}
-</p>
 {% if project.source %}
 <p>
 Project source:
 <a href="{{ project.source }}" target="_blank">{{ project.source }}</a>
 </p>
 {% endif %}
+<p>
+{{ project.text }}
+</p>
 {% if user.is_authenticated %}
 <br clear="all"/>
 <p>
