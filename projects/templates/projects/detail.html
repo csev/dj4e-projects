@@ -1,7 +1,25 @@
 {% extends "base_menu.html" %}
 {% load humanize %} <!-- https://docs.djangoproject.com/en/2.1/ref/contrib/humanize -->
 {% load crispy_forms_tags %}
+{% block head %}
+<style>
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: none;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+}
+</style>
+{% endblock %}
 {% block content %}
+<div id="overlay" class="overlay" style="text-align: center; margin-top: 50px;"
+onclick="$('#overlay').hide();" >
+<img style="width:90%;border:3px solid black;" src="{% url 'projects:picture' project.id %}">
+</div>
 <span style="float: right;">
 ({{ project.updated_at|naturaltime }})
 {% if project.owner == user %}
@@ -19,9 +37,8 @@
     {% endif %}
 </h1>
 {% if project.content_type %}
-<a href="{% url 'projects:picture' project.id %}" target="_blank">
-<img style="float:right; max-width:30%;" src="{% url 'projects:picture' project.id %}">
-</a>
+<img style="float:right; max-width:30%;" src="{% url 'projects:picture' project.id %}"
+                                         onclick="$('#overlay').show();">
 {% endif %}
 <p>
 {{ project.text }}
