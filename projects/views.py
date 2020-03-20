@@ -28,10 +28,10 @@ class MyListView(OwnerListView):
             # Multi-field search
             query = Q(title__contains=strval)
             query.add(Q(text__contains=strval), Q.OR)
-            project_list = Project.objects.filter(Q(owner=request.user.id) | Q(published=True)).filter(query).select_related().order_by('-updated_at')[:10]
+            project_list = Project.objects.filter(Q(owner=request.user.id) | Q(published=True)).filter(query).select_related().order_by('-updated_at')[:50]
         else :
             # try both versions with > 4 posts and watch the queries that happen
-            project_list = Project.objects.filter(Q(owner=request.user.id) | Q(published=True)).order_by('-updated_at')[:10]
+            project_list = Project.objects.filter(Q(owner=request.user.id) | Q(published=True)).order_by('-updated_at')[:50]
             # objects = Project.objects.select_related().all().order_by('-updated_at')[:10]
 
         unpublished = Project.objects.filter(published=None).count()

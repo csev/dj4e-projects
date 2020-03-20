@@ -1,11 +1,12 @@
 {% extends "base_menu.html" %}
 {% block content %}
-    <h1>Welcome to {{ settings.APP_NAME }}</h1>
+<h1>
 <div style="float:right;">
 <a href="https://www.djangoproject.com/" target="_blank">
     <img src="https://static.djangoproject.com/img/logo-django.42234b631760.svg" style="background-color: #0C3C26; padding: 10px;">
 </a>
 </div>
+    Welcome to {{ settings.APP_NAME }}</h1>
     <p>
     This is a web site that showcases projects from the SI364 and SI664
     (<a href="https://www.dj4e.com/" target="_blank">Django</a>) courses 
@@ -14,10 +15,18 @@
     taking the course.
     </p>
     <p>
+    You can <a href="/projects">view the projects on this site</a>.
+    </p>
+    <p>
     You can see the project
     <a href="https://www.dj4e.com/project/00_overview.md" target="_blank">
         specifications</a> and 
     <a href="https://www.dj4e.com/lessons/pr_description" target="_blank">
         milestones</a>.
+    </p>
+    <p>
+    If you are a student or former student of these classes, please log in
+    using your github account and submit your project so that everyone
+    can see your work.
     </p>
 {% endblock %}
