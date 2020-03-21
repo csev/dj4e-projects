@@ -4,7 +4,7 @@
 {% block head %}
 <style>
 .overlay{
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -16,10 +16,12 @@
 </style>
 {% endblock %}
 {% block content %}
-<div id="overlay" class="overlay" style="text-align: center; margin-top: 50px;"
-onclick="$('#overlay').hide();" >
-<img style="width:90%;border:3px solid black;" src="{% url 'projects:picture' project.id %}">
+{% if project.content_type %}
+<div id="overlay" class="overlay" style="text-align: center;"
+   onclick="document.getElementById('overlay').style.display = 'none';" >
+<img style="width:90%;margin-top: 50px;border:3px solid black;" src="{% url 'projects:picture' project.id %}">
 </div>
+{% endif %}
 <span style="float: right;">
 ({{ project.updated_at|naturaltime }})
 {% if project.owner == user %}
@@ -38,7 +40,7 @@ onclick="$('#overlay').hide();" >
 </h1>
 {% if project.content_type %}
 <img style="float:right; max-width:30%;" src="{% url 'projects:picture' project.id %}"
-                                         onclick="$('#overlay').show();">
+    onclick="document.getElementById('overlay').style.display = 'block';">
 {% endif %}
 {% if project.source %}
 <p>
