@@ -15,9 +15,8 @@ Including another URLconf
 """
 import os
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
-from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.views.static import serve
 
@@ -26,14 +25,14 @@ urlpatterns = [
     path('projects/', include('projects.urls')),
     path('admin/', admin.site.urls),  # Keep
     path('accounts/', include('django.contrib.auth.urls')),  # Keep
-    url(r'^oauth/', include('social_django.urls', namespace='social')),  # Keep
+    re_path(r'^oauth/', include('social_django.urls', namespace='social')),  # Keep
 
 ]
 
 # Serve the static HTML
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 urlpatterns += [
-    url(r'^site/(?P<path>.*)$', serve,
+    re_path(r'^site/(?P<path>.*)$', serve,
         {'document_root': os.path.join(BASE_DIR, 'site'),
            'show_indexes': True},
         name='site_path'
